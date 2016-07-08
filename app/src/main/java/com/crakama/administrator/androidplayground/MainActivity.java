@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -42,6 +43,7 @@ public class MainActivity extends ListActivity {
 
 
     }//End of onCreate()
+    //   creating the menus using the Menu.add() method instead of inflating the XML file
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_DOWNLOAD, 0, R.string.menu_download);
@@ -50,5 +52,30 @@ public class MainActivity extends ListActivity {
     }
     public void toggleMenu(View view) {
         showDownloadMenu=!showDownloadMenu;
+    }
+
+    //change the visibility of the Download menu item based on flag:
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(MENU_DOWNLOAD);
+        menuItem.setVisible(showDownloadMenu);
+        return true;
+    }
+    // Response to each menu item:
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_DOWNLOAD:
+                Toast.makeText(this, R.string.menu_download,
+                        Toast.LENGTH_LONG).show();
+                break;
+            case MENU_SETTINGS:
+                Toast.makeText(this, R.string.menu_settings,
+                        Toast.LENGTH_LONG).show();
+                break;
+            default:
+                return super.onContextItemSelected(item);
+        }
+        return true;
     }
 }//End of Class
